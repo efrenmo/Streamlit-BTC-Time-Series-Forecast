@@ -752,7 +752,9 @@ The dataframe below show us the aggregated value for each of the metrics calcula
 
 with st.echo():
     # For charting purposes we need to change the datatype for column "horizon (days)" from timedelta to float
-    pm['horizon'] = pm['horizon'].astype('timedelta64[D]')
+    # pm['horizon'] = pm['horizon'].astype('timedelta64[D]')
+    pm['horizon'] = pm['horizon'].dt.total_seconds()
+    pm['horizon'] =  pm['horizon'] / (24*60*60)
     pm.rename(columns={"horizon": "horizon (days)"}, inplace=True)
     pm[['horizon (days)', 'mape', 'mae', 'mse', 'rmse', 'coverage']]
 
