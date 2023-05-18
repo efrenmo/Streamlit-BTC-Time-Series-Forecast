@@ -778,7 +778,7 @@ with tab3:
     with st.echo():
         # For charting purposes we need to change the datatype for column "horizon (days)" from timedelta to float
         # pm_all['horizon'] = pm_all['horizon'].astype('timedelta64[D]')
-        pm_all = pm_all['horizon'].dt.total_seconds()
+        pm_all['horizon'] = pm_all['horizon'].dt.total_seconds()
         pm_all['horizon'] = pm_all['horizon'] / (24*60*60)
         pm_all.rename(columns={"horizon": "horizon (days)"}, inplace=True)
         st.dataframe(pm_all)
