@@ -1069,8 +1069,10 @@ with st.echo():
     T_pm = performance_metrics(Tuned_forecast_cv, rolling_window=0.05)
 
 with st.echo():
-    # For charting purposes we need to change the datatype for column "horizon (days)" from timedelta to float
-    T_pm['horizon'] = T_pm['horizon'].astype('timedelta64[D]')
+    # For charting purposes we need to change the datatype for column "horizon (days)" from timedelta nano-seconds to days float
+    #T_pm['horizon'] = T_pm['horizon'].astype('timedelta64[D]') ## Deprecated
+    T_pm['horizon'] = T_pm['horizon'].dt.total_seconds()
+    T_pm['horizon'] = T_pm['horizon'] / (24*60*60)
     T_pm.rename(columns={"horizon": "horizon (days)"}, inplace=True)
     T_pm[['horizon (days)', 'mape', 'mae', 'mse', 'rmse', 'coverage']]
 
@@ -1092,8 +1094,10 @@ with tab3:
         T_pm_all = performance_metrics(Tuned_forecast_cv, rolling_window=-1)
 
     with st.echo():
-        # For charting purposes we need to change the datatype for column "horizon (days)" from timedelta to float
-        T_pm_all['horizon'] = T_pm_all['horizon'].astype('timedelta64[D]')
+        # For charting purposes we need to change the datatype for column "horizon (days)" from from timedelta nano-seconds to days float
+        #T_pm_all['horizon'] = T_pm_all['horizon'].astype('timedelta64[D]') ## Deprecated
+        T_pm_all['horizon'] = T_pm_all['horizon'].dt.total_seconds()
+        T_pm_all['horizon'] = T_pm_all['horizon'] / (24 * 60 * 60)
         T_pm_all.rename(columns={"horizon": "horizon (days)"}, inplace=True)
         st.dataframe(T_pm_all)
 
