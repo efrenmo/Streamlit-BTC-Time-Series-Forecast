@@ -150,7 +150,7 @@ with st.container():
         data and shifts in the trend, and typically handles outliers well.
 
 
-        [**Bitcoin** **(BTC)**](https://www.coingecko.com/en/coins/bitcoin) is a scarse decentralized digital
+        [**Bitcoin** **(BTC)**](https://www.coingecko.com/en/coins/bitcoin) is a scarce decentralized digital
         currency introduced into the world in 2009 by a person or group of people using the pseudonym **`Satoshi Nakamoto`**.
         It can be transferred on the peer-to-peer Bitcoin network. Bitcoin transactions are verified by network nodes
         through cryptography and recorded in a public distributed ledger called a blockchain.
@@ -314,7 +314,7 @@ with tab2:
             name = "Volume",
             yaxis="y",
             marker = {'color' : '#19D3F3', 'line_width':0.15}, #19D3F3 00CC99
-            showlegend = False,
+            showlegend=False,
 
             )
         )
@@ -763,21 +763,23 @@ st.code("pm[['horizon (days)', 'mape', 'mae', 'mse', 'rmse', 'coverage']].descri
 st.write(pm[['horizon (days)', 'mape', 'mae', 'mse', 'rmse', 'coverage']].describe())
 
 
-# ---------- PART 1 - SECTION 7: Performance Matric Visualization  ---------- #
+# ---------- PART 1 - SECTION 7: Performance Metric Visualization  ---------- #
 
 tab1, tab2, tab3 = st.tabs(["📊Chart", "🔣Code", "📃Additional Data"])
 
 with tab3:
     st.write("""
     The below dataframe show us the performance metrics for each of the folds in the cross validation.
-    There were 13 cut-offs. Therefore, on the performace metric visualization below you will see 13 dots per horizon day.
+    There were 13 cut-offs. Therefore, on the performance metric visualization below you will see 13 dots per horizon day.
     """)
     with st.echo():
         pm_all = performance_metrics(forecast_cv, rolling_window=-1)
 
     with st.echo():
         # For charting purposes we need to change the datatype for column "horizon (days)" from timedelta to float
-        pm_all['horizon'] = pm_all['horizon'].astype('timedelta64[D]')
+        # pm_all['horizon'] = pm_all['horizon'].astype('timedelta64[D]')
+        pm_all = pm_all['horizon'].dt.total_seconds()
+        pm_all['horizon'] = pm_all['horizon'] / (24*60*60)
         pm_all.rename(columns={"horizon": "horizon (days)"}, inplace=True)
         st.dataframe(pm_all)
 
