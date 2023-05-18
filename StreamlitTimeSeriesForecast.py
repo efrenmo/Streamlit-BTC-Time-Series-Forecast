@@ -442,7 +442,7 @@ toc.subheader("Preparing Data for the Algorithm")
 #st.subheader("Preparing Data for the Algorithm")
 
 st.write("""
-Prophet in its most simple form requires only two columns, **`'datesatamp' and 'price'`**
+Prophet in its most simple form requires only two columns, **`'datestamp' and 'price'`**
 
 """)
 
